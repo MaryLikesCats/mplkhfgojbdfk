@@ -34,20 +34,24 @@ public class SensorController {
         this.sensorService = sensorService;
     }
     @GetMapping("/sensor")
+    public void getSensor() throws SQLException {
+        System.out.println("HI");
+        Sensor s = new Sensor();
+//        return s.getSensors();
+    }
+
 //    public Sensor getSensor(@PathVariable Integer id) throws SQLException {
-//        Statement st = conn.createStatement();
-//        ResultSet results = st.executeQuery("select * from SensorReading where uuid = "+id);
-//        return (Sensor) results;
+//        return Sensor.getSensorById(id);
 //    }
 
     //To update to above when working
-    public Sensor getSensor(@RequestParam Integer id){
-        Optional sensor = sensorService.getService(id);
-        if(sensor.isPresent()){
-            return (Sensor) sensor.get();
-        }
-        return null;
-    }
+//    public Sensor getSensor(@RequestParam Integer id){
+//        Optional sensor = sensorService.getService(id);
+//        if(sensor.isPresent()){
+//            return (Sensor) sensor.get();
+//        }
+//        return null;
+//    }
 
     @GetMapping("/sensorByLocation")
     public Sensor getSensorByLocation(@RequestParam String country){
