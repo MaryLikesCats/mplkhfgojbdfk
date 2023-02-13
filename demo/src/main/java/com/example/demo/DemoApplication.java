@@ -16,11 +16,14 @@ public class DemoApplication {
 
 		int uuid = 100;
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:weatherSensorDB.db");
+		dbSetup();
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	public static boolean dbSetup() throws SQLException {
 		Database db = new Database();
+		db.createDatabase();
+		db.populateDatabase();
 
 		return true;
 	}

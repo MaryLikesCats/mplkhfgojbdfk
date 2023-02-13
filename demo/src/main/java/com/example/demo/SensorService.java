@@ -13,6 +13,7 @@ public class SensorService {
     private List<Sensor> sensorList;
 
     public SensorService() {
+        //put in db connection here and get the sensor table
         sensorList = new ArrayList<>();
         Sensor sensor = new Sensor(1, "USA", "NEW YORK");
         Sensor sensor2 = new Sensor(2, "ENG", "LONDON");
@@ -26,6 +27,17 @@ public class SensorService {
         Optional optional = Optional.empty();
         for(Sensor sensor: sensorList){
             if(id ==sensor.getId()){
+                optional = Optional.of(sensor);
+                return optional;
+            }
+        }
+        return optional;
+    }
+
+    public Optional<Sensor> getServiceByLocation(String country) {
+        Optional optional = Optional.empty();
+        for(Sensor sensor: sensorList){
+            if(country == sensor.getCountryName()){
                 optional = Optional.of(sensor);
                 return optional;
             }

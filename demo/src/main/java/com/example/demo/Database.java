@@ -21,9 +21,9 @@ public class Database {
     public boolean createDatabase(){
 
         File file = new File(databaseName);
-        if(file.exists()){
-            System.out.println("This database exists");
-        }
+//        if(file.exists()){
+//            System.out.println("This database exists");
+//        }
 
         //Creates the database and table for Sensor and SensorData
         String sql = "create table Sensor(uuid INTEGER PRIMARY KEY, Country TEXT, City TEXT)";

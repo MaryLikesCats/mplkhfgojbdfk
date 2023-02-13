@@ -23,4 +23,13 @@ public class SensorController {
         }
         return null;
     }
+
+    @GetMapping("/sensorByLocation")
+    public Sensor getSensorByLocation(@RequestParam String country){
+        Optional sensor = sensorService.getServiceByLocation(country);
+        if(sensor.isPresent()){
+            return (Sensor) sensor.get();
+        }
+        return null;
+    }
 }
