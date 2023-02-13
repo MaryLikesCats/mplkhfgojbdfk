@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Sensor {
     private int id;
@@ -20,10 +22,37 @@ public class Sensor {
         this.cityName = cityName;
     }
 
-    public void getSensors() throws SQLException {
+    public HashMap getSensors() throws SQLException {
         Statement st = conn.createStatement();
-        ResultSet results = st.executeQuery("select * from SensorReading");
-        System.out.println(results);
+        ResultSet results = st.executeQuery("select * from Sensor");
+        System.out.println("Hello");
+//        return results;
+        HashMap resp = new HashMap();
+        ResultSetMetaData rsmd = results.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        while (results.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                if (i > 1) System.out.print(",  ");
+                String columnValue = results.getString(i);
+                resp.put(columnValue, rsmd.getColumnName(i));
+                System.out.print(columnValue + " " + rsmd.getColumnName(i));
+            }
+            System.out.println("");
+        }
+        return resp;
+
+
+
+//        ResultSetMetaData rsmd = results.getMetaData();
+//        int columnsNumber = rsmd.getColumnCount();
+//        while (results.next()) {
+//            for (int i = 1; i <= columnsNumber; i++) {
+//                if (i > 1) System.out.print(",  ");
+//                String columnValue = results.getString(i);
+//                System.out.print(columnValue + " " + rsmd.getColumnName(i));
+//            }
+//            System.out.println("");
+//        }
 //        return (Sensor) results;
 
     }

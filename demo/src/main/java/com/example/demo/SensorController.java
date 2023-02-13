@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Map;
 
@@ -34,10 +36,13 @@ public class SensorController {
         this.sensorService = sensorService;
     }
     @GetMapping("/sensor")
-    public void getSensor() throws SQLException {
+    public HashMap getAllSensor() throws SQLException {
         System.out.println("HI");
         Sensor s = new Sensor();
-//        return s.getSensors();
+        HashMap r = s.getSensors();
+//        s.getSensors();
+        return r;
+
     }
 
 //    public Sensor getSensor(@PathVariable Integer id) throws SQLException {
