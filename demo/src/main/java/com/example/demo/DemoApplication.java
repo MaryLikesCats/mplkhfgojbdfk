@@ -16,7 +16,7 @@ public class DemoApplication {
 
 		int uuid = 100;
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:weatherSensorDB.db");
-		dbSetup();
+//		dbSetup();
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

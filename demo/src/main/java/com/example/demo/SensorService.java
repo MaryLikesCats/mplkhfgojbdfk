@@ -23,6 +23,8 @@ public class SensorService {
         sensorList.addAll(Arrays.asList(sensor,sensor2,sensor3,sensor4,sensor5));
     }
 
+    //GET REQUEST BY ID
+    //Make it so that it uses the database
     public Optional<Sensor> getService(Integer id) {
         Optional optional = Optional.empty();
         for(Sensor sensor: sensorList){
@@ -34,6 +36,7 @@ public class SensorService {
         return optional;
     }
 
+    //This doesn't work :(
     public Optional<Sensor> getServiceByLocation(String country) {
         Optional optional = Optional.empty();
         for(Sensor sensor: sensorList){
