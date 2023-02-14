@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import org.jooq.impl.DSL;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.Map;
 
 @RestController
 public class SensorController {
@@ -39,38 +35,19 @@ public class SensorController {
         this.sensorService = sensorService;
     }
     @GetMapping("/sensor")
-    public HashMap getAllSensor() throws SQLException {
-        System.out.println("HI");
+    public ArrayList getAllSensor() throws SQLException {
         Sensor s = new Sensor();
-        HashMap r = s.getAllSensors();
 //        s.getSensors();
-        return r;
+        return s.getAllSensors();
 
     }
 
     @GetMapping("/sensor/{id}")
-    public JSONArray getSensorById(@PathVariable Integer id) throws Exception {
-        System.out.println("SensorById - Sensor Controller");
+    public HashMap getSensorById(@PathVariable Integer id) throws Exception {
         Sensor s = new Sensor();
-//        HashMap r = s.getSensorsById(id);
-        System.out.println(s.getSensorsById(id));
         return s.getSensorsById(id);
     }
 
-
-
-//    public Sensor getSensor(@PathVariable Integer id) throws SQLException {
-//        return Sensor.getSensorById(id);
-//    }
-
-    //To update to above when working
-//    public Sensor getSensor(@RequestParam Integer id){
-//        Optional sensor = sensorService.getService(id);
-//        if(sensor.isPresent()){
-//            return (Sensor) sensor.get();
-//        }
-//        return null;
-//    }
 
     @GetMapping("/sensorByLocation")
     public Sensor getSensorByLocation(@RequestParam String country){

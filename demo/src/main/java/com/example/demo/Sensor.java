@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,91 +22,45 @@ public class Sensor {
         this.cityName = cityName;
     }
 
-    public HashMap getAllSensors() throws SQLException {
+    public ArrayList<HashMap> getAllSensors() throws SQLException {
         Statement st = conn.createStatement();
         ResultSet results = st.executeQuery("select * from Sensor");
-        System.out.println("Hello");
-//        return results;
-        HashMap resp = new HashMap();
+
         ResultSetMetaData rsmd = results.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
+
+        ArrayList<HashMap> ArrayListOfHashMaps = new ArrayList<>();
+
         while (results.next()) {
+            HashMap newHashmapForEachLoop = new HashMap();
             for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print(",  ");
                 String columnValue = results.getString(i);
-                resp.put(columnValue, rsmd.getColumnName(i));
-                System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                newHashmapForEachLoop.put(rsmd.getColumnName(i), columnValue);
             }
-            System.out.println("");
+            ArrayListOfHashMaps.add(newHashmapForEachLoop);
         }
-        return resp;
+        return ArrayListOfHashMaps;
 
 
     }
-        public JSONArray getSensorsById(int id) throws Exception {
+        public HashMap getSensorsById(int id) throws Exception {
             Statement st = conn.createStatement();
             ResultSet results = st.executeQuery("select * from Sensor where uuid = " + id);
-            System.out.println("Sensor Class ");
-            System.out.println(convert((results)));
-            return convert(results);
+
+            HashMap resp = new HashMap();
+            ResultSetMetaData rsmd = results.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (results.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    String columnValue = results.getString(i);
+                    resp.put(rsmd.getColumnName(i), columnValue);
+                }
+            }
+            return resp;
 
         }
 
-    public JSONArray convert(ResultSet resultSet) throws Exception {
 
-        JSONArray jsonArray = new JSONArray();
-
-        while (resultSet.next()) {
-
-            int columns = resultSet.getMetaData().getColumnCount();
-            org.json.JSONObject obj = new JSONObject();
-
-            for (int i = 0; i < columns; i++)
-                obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
-
-            jsonArray.put(obj);
-        }
-        return jsonArray;
-    }
-//        return results;
-//            HashMap resp = new HashMap();
-//            ResultSetMetaData rsmd = results.getMetaData();
-//            int columnsNumber = rsmd.getColumnCount();
-//            while (results.next()) {
-//                for (int i = 1; i <= columnsNumber; i++) {
-//                    if (i > 1) System.out.print(",  ");
-//                    String columnValue = results.getString(i);
-//                    resp.put(columnValue, rsmd.getColumnName(i));
-//                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
-//                }
-//                System.out.println("");
-//            }
-//            return resp;
-
-
-//        ResultSetMetaData rsmd = results.getMetaData();
-//        int columnsNumber = rsmd.getColumnCount();
-//        while (results.next()) {
-//            for (int i = 1; i <= columnsNumber; i++) {
-//                if (i > 1) System.out.print(",  ");
-//                String columnValue = results.getString(i);
-//                System.out.print(columnValue + " " + rsmd.getColumnName(i));
-//            }
-//            System.out.println("");
-//        }
-//        return (Sensor) results;
-
-
-
-//    public Sensor getSensorById(int id) throws SQLException {
-//        //open conn to db
-//        //send sql request
-//        Statement st = conn.createStatement();
-//        ResultSet results = st.executeQuery("select * from SensorReading where uuid = "+id);
-//        return (Sensor) results;
-//
-//
-//    }
     public int getId() {
         return id;
     }
