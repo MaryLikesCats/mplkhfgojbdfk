@@ -44,10 +44,26 @@ public class SensorData {
             ArrayListOfHashMaps.add(newHashmapForEachLoop);
         }
         return ArrayListOfHashMaps;
-
-
     }
 
+    public ArrayList getSensorReadingsById(Integer id) throws SQLException {
+        Statement st = conn.createStatement();
+        ResultSet results = st.executeQuery("select * from SensorReading where uuid = " + id);
+
+        ResultSetMetaData rsmd = results.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        ArrayList<HashMap> ArrayListOfHashMaps = new ArrayList<>();
+        while (results.next()) {
+            HashMap newHashmapForEachLoop = new HashMap();
+            for (int i = 1; i <= columnsNumber; i++) {
+                String columnValue = results.getString(i);
+                newHashmapForEachLoop.put(rsmd.getColumnName(i), columnValue);
+            }
+            ArrayListOfHashMaps.add(newHashmapForEachLoop);
+        }
+        return ArrayListOfHashMaps;
+
+    }
     public int getUuid() {
         return uuid;
     }
