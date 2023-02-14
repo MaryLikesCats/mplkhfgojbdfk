@@ -28,7 +28,7 @@ public class SensorService {
     public Optional<Sensor> getService(Integer id) {
         Optional optional = Optional.empty();
         for(Sensor sensor: sensorList){
-            if(id ==sensor.getId()){
+            if(id ==sensor.getUuid()){
                 optional = Optional.of(sensor);
                 return optional;
             }
@@ -40,7 +40,7 @@ public class SensorService {
     public Optional<Sensor> getServiceByLocation(String country) {
         Optional optional = Optional.empty();
         for(Sensor sensor: sensorList){
-            if(country == sensor.getCountryName()){
+            if(country == sensor.getCountry()){
                 optional = Optional.of(sensor);
                 return optional;
             }

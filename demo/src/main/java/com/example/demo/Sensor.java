@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sensor {
-    private int id;
-    private String countryName;
-    private String cityName;
+    private int uuid;
+    private String country;
+    private String city;
     private Connection conn;
     private String databaseName;
 
@@ -17,10 +17,10 @@ public class Sensor {
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
-    public Sensor(int id, String countryName, String cityName) {
-        this.id = id;
-        this.countryName = countryName;
-        this.cityName = cityName;
+    public Sensor(int uuid, String country, String city) {
+        this.uuid = uuid;
+        this.country = country;
+        this.city = city;
     }
 
     public ArrayList<HashMap> getAllSensors() throws SQLException {
@@ -64,12 +64,7 @@ public class Sensor {
 
 
     public void postNewSensor(Sensor sensor) throws SQLException {
-        //send sql and snesor data
-        System.out.println(sensor);
-        System.out.println(sensor.id);
-        System.out.println(sensor.countryName);
-        System.out.println(sensor.cityName);
-        String request = "insert into Sensor values ('" + sensor.id + "', '" + sensor.countryName + "', '" + sensor.cityName + "')";
+        String request = "insert into Sensor values ('" + sensor.uuid + "', '" + sensor.country + "', '" + sensor.city + "')";
         Statement statement = conn.createStatement();
         statement.executeUpdate(request);
     }
@@ -78,28 +73,28 @@ public class Sensor {
     public Sensor saveSensor(Sensor sensor){
         return null;
     }
-    public int getId() {
-        return id;
+    public int getUuid() {
+        return uuid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUuid(int uuid) {
+        this.uuid = uuid;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getCityName() {
-        return cityName;
+    public String getCity() {
+        return city;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCity(String city) {
+        this.city = city;
     }
 
 }

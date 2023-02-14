@@ -1,14 +1,11 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 @RestController
 public class SensorController {
@@ -66,10 +63,6 @@ public class SensorController {
 
     @PostMapping("/sensor/create")
     public void createSensor(@RequestBody Sensor sensor) throws SQLException {
-        System.out.println(sensor);
-        System.out.println(sensor.getId());
-        System.out.println(sensor.getCountryName());
-        System.out.println(sensor.getCityName());
         Sensor postSensor = new Sensor();
         postSensor.postNewSensor(sensor);
     }
