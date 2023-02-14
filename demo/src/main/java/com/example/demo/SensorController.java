@@ -36,19 +36,18 @@ public class SensorController {
     }
     @GetMapping("/sensor")
     public ArrayList getAllSensor() throws SQLException {
-        Sensor s = new Sensor();
-//        s.getSensors();
-        return s.getAllSensors();
+        Sensor sensor = new Sensor();
+        return sensor.getAllSensors();
 
     }
 
     @GetMapping("/sensor/{id}")
     public HashMap getSensorById(@PathVariable Integer id) throws Exception {
-        Sensor s = new Sensor();
-        return s.getSensorsById(id);
+        Sensor sensor = new Sensor();
+        return sensor.getSensorsById(id);
     }
 
-
+// To implement
     @GetMapping("/sensorByLocation")
     public Sensor getSensorByLocation(@RequestParam String country){
         Optional sensor = sensorService.getServiceByLocation(country);

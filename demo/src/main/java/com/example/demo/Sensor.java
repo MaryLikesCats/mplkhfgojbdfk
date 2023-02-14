@@ -47,16 +47,16 @@ public class Sensor {
             Statement st = conn.createStatement();
             ResultSet results = st.executeQuery("select * from Sensor where uuid = " + id);
 
-            HashMap resp = new HashMap();
+            HashMap returnedSensor = new HashMap();
             ResultSetMetaData rsmd = results.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             while (results.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     String columnValue = results.getString(i);
-                    resp.put(rsmd.getColumnName(i), columnValue);
+                    returnedSensor.put(rsmd.getColumnName(i), columnValue);
                 }
             }
-            return resp;
+            return returnedSensor;
 
         }
 
