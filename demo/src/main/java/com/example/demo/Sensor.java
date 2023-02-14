@@ -11,11 +11,12 @@ public class Sensor {
     private Connection conn;
     private String databaseName;
 
-//Model?
+    //Model?
     public Sensor() throws SQLException {
-        this.databaseName = "weatherDB.db";
+        this.databaseName = "weatherSensorDB.db";
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
+
     public Sensor(int id, String countryName, String cityName) {
         this.id = id;
         this.countryName = countryName;
@@ -43,24 +44,40 @@ public class Sensor {
 
 
     }
-        public HashMap getSensorsById(int id) throws Exception {
-            Statement st = conn.createStatement();
-            ResultSet results = st.executeQuery("select * from Sensor where uuid = " + id);
 
-            HashMap returnedSensor = new HashMap();
-            ResultSetMetaData rsmd = results.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
-            while (results.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    String columnValue = results.getString(i);
-                    returnedSensor.put(rsmd.getColumnName(i), columnValue);
-                }
+    public HashMap getSensorsById(int id) throws Exception {
+        Statement st = conn.createStatement();
+        ResultSet results = st.executeQuery("select * from Sensor where uuid = " + id);
+
+        HashMap returnedSensor = new HashMap();
+        ResultSetMetaData rsmd = results.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        while (results.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                String columnValue = results.getString(i);
+                returnedSensor.put(rsmd.getColumnName(i), columnValue);
             }
-            return returnedSensor;
-
         }
+        return returnedSensor;
+
+    }
 
 
+    public void postNewSensor(Sensor sensor) throws SQLException {
+        //send sql and snesor data
+        System.out.println(sensor);
+        System.out.println(sensor.id);
+        System.out.println(sensor.countryName);
+        System.out.println(sensor.cityName);
+        String request = "insert into Sensor values ('" + sensor.id + "', '" + sensor.countryName + "', '" + sensor.cityName + "')";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(request);
+    }
+
+
+    public Sensor saveSensor(Sensor sensor){
+        return null;
+    }
     public int getId() {
         return id;
     }
@@ -84,6 +101,7 @@ public class Sensor {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
+
 }
 
 

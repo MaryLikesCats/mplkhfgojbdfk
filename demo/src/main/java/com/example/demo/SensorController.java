@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -48,19 +50,44 @@ public class SensorController {
     }
 
 // To implement
-    @GetMapping("/sensorByLocation")
-    public Sensor getSensorByLocation(@RequestParam String country){
-        Optional sensor = sensorService.getServiceByLocation(country);
-        if(sensor.isPresent()){
-            return (Sensor) sensor.get();
-        }
-        return null;
-    }
-
-//    @PostMapping("/employees")
-//    Employee newEmployee(@RequestBody Employee newEmployee) {
-//        return repository.save(newEmployee);
+//    @GetMapping("/sensorByLocation")
+//    public Sensor getSensorByLocation(@RequestParam String country){
+//        Optional sensor = sensorService.getServiceByLocation(country);
+//        if(sensor.isPresent()){
+//            return (Sensor) sensor.get();
+//        }
+//        return null;
 //    }
+
+//    @PostMapping("/sensor/create")
+//    public ResponseEntity<Sensor> newSensor(@RequestBody Sensor newSensor) {
+//        return new ResponseEntity<Sensor>(Sensor.saveSensor(newSensor), HttpStatus.CREATED);
+//    }
+
+    @PostMapping("/sensor/create")
+    public void createSensor(@RequestBody Sensor sensor) throws SQLException {
+        System.out.println(sensor);
+        System.out.println(sensor.getId());
+        System.out.println(sensor.getCountryName());
+        System.out.println(sensor.getCityName());
+        Sensor postSensor = new Sensor();
+        postSensor.postNewSensor(sensor);
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
