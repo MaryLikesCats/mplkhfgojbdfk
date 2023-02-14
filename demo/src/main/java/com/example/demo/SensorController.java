@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import org.jooq.impl.DSL;
+import org.jooq.tools.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +42,20 @@ public class SensorController {
     public HashMap getAllSensor() throws SQLException {
         System.out.println("HI");
         Sensor s = new Sensor();
-        HashMap r = s.getSensors();
+        HashMap r = s.getAllSensors();
 //        s.getSensors();
         return r;
 
+    }
+
+    @GetMapping("/sensor/{id}")
+    public JSONArray getSensorById(@PathVariable Integer id) throws Exception {
+        System.out.println("SensorById");
+        Sensor s = new Sensor();
+//        HashMap r = s.getSensorsById(id);
+        JSONArray res = s.getSensorsById(id);
+        System.out.println(res);
+        return s.getSensorsById(id);
     }
 
 //    public Sensor getSensor(@PathVariable Integer id) throws SQLException {
@@ -71,4 +84,6 @@ public class SensorController {
 //    Employee newEmployee(@RequestBody Employee newEmployee) {
 //        return repository.save(newEmployee);
 //    }
+
+
 }
