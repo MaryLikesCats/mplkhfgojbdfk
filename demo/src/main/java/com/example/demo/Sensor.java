@@ -55,7 +55,7 @@ public class Sensor {
 
         }
 
-    public static JSONArray convert(ResultSet resultSet) throws Exception {
+    public JSONArray convert(ResultSet resultSet) throws Exception {
 
         JSONArray jsonArray = new JSONArray();
 
