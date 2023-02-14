@@ -23,10 +23,6 @@ public class SensorController {
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
-//    @RequestMapping("/")
-//    public String defaultInstructions() {
-//        return "WEATHER SENSER REST API" + "\n" + "---------------- \n to query by id use this /sensor/id ";
-//    }
 
     private SensorService sensorService;
     @Autowired
@@ -56,10 +52,6 @@ public class SensorController {
 //        return null;
 //    }
 
-//    @PostMapping("/sensor/create")
-//    public ResponseEntity<Sensor> newSensor(@RequestBody Sensor newSensor) {
-//        return new ResponseEntity<Sensor>(Sensor.saveSensor(newSensor), HttpStatus.CREATED);
-//    }
 
     @PostMapping("/sensor/create")
     public void createSensor(@RequestBody Sensor sensor) throws SQLException {

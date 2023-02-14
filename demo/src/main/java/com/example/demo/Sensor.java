@@ -1,10 +1,13 @@
 package com.example.demo;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Sensor {
+
+
+    public class Sensor {
     private int uuid;
     private String country;
     private String city;
@@ -60,6 +63,7 @@ public class Sensor {
         }
         return returnedSensor;
 
+
     }
 
 
@@ -96,6 +100,7 @@ public class Sensor {
     public void setCity(String city) {
         this.city = city;
     }
+
 
 }
 

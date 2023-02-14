@@ -42,6 +42,13 @@ public class SensorDataController {
         return sensorData.getSensorReadingsById(id);
     }
 
+    //Average Temperature
+    @GetMapping("/sensor/data/temperature/{id}")
+    public int getAverageTempById(@PathVariable Integer id) throws Exception {
+        SensorData sensorData = new SensorData();
+        return sensorData.getAverageTempById(id);
+    }
+
     @PostMapping("/sensor/data/create")
     public void createSensorData(@RequestBody SensorData sensorData) throws SQLException {
         SensorData postSensorData = new SensorData();

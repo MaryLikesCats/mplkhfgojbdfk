@@ -59,12 +59,18 @@ public class Database {
         statement.executeUpdate(usa);
 
         // inserts 6 new sensor readings into SensorReading table
-        String s1 = "insert into SensorReading values ('36', '40', '22', '2022-01-01', '100' )";
-        String s2 = "insert into SensorReading values ('31', '45', '10', '2022-01-02', '100' )";
-        String s3 = "insert into SensorReading values ('29', '61', '15', '2022-01-03', '100' )";
-        String s4 = "insert into SensorReading values ('21', '39', '38', '2022-01-01', '101' )";
-        String s5 = "insert into SensorReading values ('19', '35', '32', '2022-01-02', '101' )";
-        String s6 = "insert into SensorReading values ('20', '33', '41', '2022-01-03', '101' )";
+        String s1 = "insert into SensorReading values ('36', '40', '22', '11/01/2023', '100' )";
+        String s2 = "insert into SensorReading values ('31', '45', '10', '12/01/2023', '100' )";
+        String s3 = "insert into SensorReading values ('29', '61', '15', '13/01/2023', '100' )";
+        String s4 = "insert into SensorReading values ('21', '39', '38', '11/01/2023', '101' )";
+        String s5 = "insert into SensorReading values ('19', '35', '32', '12/01/2023', '101' )";
+        String s6 = "insert into SensorReading values ('20', '33', '41', '13/01/2023', '101' )";
+        String s7 = "insert into SensorReading values ('10', '10', '11', '11/01/2023', '102' )";
+        String s8 = "insert into SensorReading values ('21', '22', '23', '12/01/2023', '102' )";
+        String s9 = "insert into SensorReading values ('29', '50', '40', '11/01/2023', '103' )";
+        String s10 = "insert into SensorReading values ('28', '2', '3', '13/01/2023', '103' )";
+        String s11 = "insert into SensorReading values ('70', '34', '1', '12/01/2023', '104' )";
+        String s12 = "insert into SensorReading values ('65', '16', '75', '13/01/2023', '104' )";
 
         statement.executeUpdate(s1);
         statement.executeUpdate(s2);
@@ -72,6 +78,12 @@ public class Database {
         statement.executeUpdate(s4);
         statement.executeUpdate(s5);
         statement.executeUpdate(s6);
+        statement.executeUpdate(s7);
+        statement.executeUpdate(s8);
+        statement.executeUpdate(s9);
+        statement.executeUpdate(s10);
+        statement.executeUpdate(s11);
+        statement.executeUpdate(s12);
 
         return true;
     }

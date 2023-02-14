@@ -1,8 +1,13 @@
 package com.example.demo;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
+import static java.lang.Integer.parseInt;
 
 public class SensorData {
     private int uuid;
@@ -13,7 +18,7 @@ public class SensorData {
     private Connection conn;
     private String databaseName;
 
-    public SensorData(int temp, int humidity, int windSpeed, String date, int uuid){
+    public SensorData(int temp, int humidity, int windSpeed, int uuid, String date){
         this.temp = temp;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
@@ -65,6 +70,30 @@ public class SensorData {
 
     }
 
+
+    public int getAverageTempById(Integer id) throws SQLException {
+        int sumOfTemperatures = 0;
+        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
+        System.out.println(arrayListOfHashMapsOfSensorDataById);
+
+        //loop through and get all the temps and divide by number of entries in hashmap arraylist
+        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
+            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
+            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
+            currentHashmap.get("Temperature");
+
+            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
+            System.out.println(currentHashmap.get("Temperature"));
+            System.out.println(sensorData);
+            sumOfTemperatures = sumOfTemperatures + sensorData.getTemp();
+            System.out.println(sumOfTemperatures);
+        }
+        System.out.println(sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size());
+
+        return sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size();
+
+    }
+
     public void postNewSensorData(SensorData sensorData) throws SQLException {
         String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
         Statement statement = conn.createStatement();
@@ -110,6 +139,10 @@ public class SensorData {
     public void setDate(String date) {
         this.date = date;
     }
-
+    public void convertStringToSimpleDateFormat() throws ParseException {
+        String sDate1="31/12/1998";
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+        System.out.println(sDate1+"\t"+date1);
+    }
 
 }
