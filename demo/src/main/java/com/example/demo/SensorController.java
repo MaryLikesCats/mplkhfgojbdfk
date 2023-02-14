@@ -23,10 +23,10 @@ public class SensorController {
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
-    @RequestMapping("/")
-    public String defaultInstructions() {
-        return "WEATHER SENSER REST API" + "\n" + "---------------- \n to query by id use this /sensor/id ";
-    }
+//    @RequestMapping("/")
+//    public String defaultInstructions() {
+//        return "WEATHER SENSER REST API" + "\n" + "---------------- \n to query by id use this /sensor/id ";
+//    }
 
     private SensorService sensorService;
     @Autowired

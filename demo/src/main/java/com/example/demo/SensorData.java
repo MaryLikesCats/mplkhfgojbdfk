@@ -13,12 +13,12 @@ public class SensorData {
     private Connection conn;
     private String databaseName;
 
-    public SensorData(int uuid, int temp, int humidity, int windSpeed, String date){
-        this.uuid = uuid;
+    public SensorData(int temp, int humidity, int windSpeed, String date, int uuid){
         this.temp = temp;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.date = date;
+        this.uuid = uuid;
     }
     public SensorData() throws SQLException {
         this.databaseName = "weatherSensorDB.db";
@@ -64,6 +64,13 @@ public class SensorData {
         return ArrayListOfHashMaps;
 
     }
+
+    public void postNewSensorData(SensorData sensorData) throws SQLException {
+        String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(request);
+    }
+
     public int getUuid() {
         return uuid;
     }
@@ -103,5 +110,6 @@ public class SensorData {
     public void setDate(String date) {
         this.date = date;
     }
+
 
 }
