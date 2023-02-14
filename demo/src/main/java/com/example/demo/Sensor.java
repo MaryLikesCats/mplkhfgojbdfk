@@ -49,13 +49,28 @@ public class Sensor {
         public JSONArray getSensorsById(int id) throws Exception {
             Statement st = conn.createStatement();
             ResultSet results = st.executeQuery("select * from Sensor where uuid = " + id);
-            System.out.println("HelloById");
-            System.out.println(convert(results));
-            JSONArray res = convert(results);
-            System.out.println(res);
+            System.out.println("Sensor Class ");
+            System.out.println(convert((results)));
             return convert(results);
 
         }
+
+    public static JSONArray convert(ResultSet resultSet) throws Exception {
+
+        JSONArray jsonArray = new JSONArray();
+
+        while (resultSet.next()) {
+
+            int columns = resultSet.getMetaData().getColumnCount();
+            org.json.JSONObject obj = new JSONObject();
+
+            for (int i = 0; i < columns; i++)
+                obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
+
+            jsonArray.put(obj);
+        }
+        return jsonArray;
+    }
 //        return results;
 //            HashMap resp = new HashMap();
 //            ResultSetMetaData rsmd = results.getMetaData();
@@ -117,23 +132,6 @@ public class Sensor {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
-    }
-
-    public static JSONArray convert(ResultSet resultSet) throws Exception {
-
-        JSONArray jsonArray = new JSONArray();
-
-        while (resultSet.next()) {
-
-            int columns = resultSet.getMetaData().getColumnCount();
-            JSONObject obj = new JSONObject();
-
-            for (int i = 0; i < columns; i++)
-                obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
-
-            jsonArray.put(obj);
-        }
-        return jsonArray;
     }
 }
 
