@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.sql.*;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,16 +13,17 @@ import java.util.HashMap;
     private Connection conn;
     private String databaseName;
 
-    //Model?
     public Sensor() throws SQLException {
         this.databaseName = "weatherSensorDB.db";
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
-    public Sensor(int uuid, String country, String city) {
+    public Sensor(int uuid, String country, String city) throws SQLException {
         this.uuid = uuid;
         this.country = country;
         this.city = city;
+        this.databaseName = "weatherSensorDB.db";
+        this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
     public ArrayList<HashMap> getAllSensors() throws SQLException {
@@ -61,15 +61,20 @@ import java.util.HashMap;
             }
         }
         return returnedSensor;
-
-
     }
 
 
-    public void postNewSensor(Sensor sensor) throws SQLException {
-        String request = "insert into Sensor values ('" + sensor.uuid + "', '" + sensor.country + "', '" + sensor.city + "')";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(request);
+    public boolean saveNewSensor(Sensor sensor){
+        try{
+            String request = "insert into Sensor values ('" + sensor.uuid + "', '" + sensor.country + "', '" + sensor.city + "')";
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(request);
+            return true;
+        }
+        catch (SQLException e){
+            return false;
+        }
+
     }
 
 
@@ -99,8 +104,6 @@ import java.util.HashMap;
     public void setCity(String city) {
         this.city = city;
     }
-
-
 }
 
 

@@ -10,7 +10,7 @@ class HomeControllerTest {
     void defaultInstructions() {
         HomeController homeController = new HomeController();
         String response = homeController.defaultInstructions();
-        assertEquals("WEATHER SENSER REST API", response);
+        assertEquals("WEATHER SENSOR REST API", response);
     }
 
 }

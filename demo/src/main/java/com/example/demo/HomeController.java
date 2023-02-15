@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
+    //provides a default message at localhost:8080
     @RequestMapping("/")
     public String defaultInstructions() {
-        return "WEATHER SENSER REST API";
+        return "WEATHER SENSOR REST API";
     }
 }

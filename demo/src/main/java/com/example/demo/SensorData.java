@@ -75,7 +75,6 @@ public class SensorData {
         ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
 
         for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
-            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
             HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
 
             SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
@@ -144,13 +143,10 @@ public class SensorData {
         ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
 
         for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
-            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
             HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
 
             SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
-            System.out.println(currentHashmap.get("Date").equals(date));
-            System.out.println(currentHashmap.get(("Date")));
-            System.out.println(date);
+
             if(currentHashmap.get("Date").equals(date)) {
                 sumOfMetricValue = sumOfMetricValue + sensorData.getMetric(metric);
                 counter++;
@@ -178,7 +174,6 @@ public class SensorData {
             SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
 
             if(isWithinRange(convertStringToSimpleDateFormat(currentHashmap.get(("Date"))), firstDateFormatted, lastDateFormatted)){
-                System.out.println("It worked");
                 sumOfMetricValue = sumOfMetricValue + sensorData.getMetric(metric);
                 counter++;
             }
@@ -237,27 +232,4 @@ public class SensorData {
         this.date = date;
     }
 
-
-//    public int getAverageTempById(Integer id) throws SQLException {
-//        int sumOfTemperatures = 0;
-//        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
-//        System.out.println(arrayListOfHashMapsOfSensorDataById);
-//
-//        //loop through and get all the temps and divide by number of entries in hashmap arraylist
-//        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
-//            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
-//            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
-//            currentHashmap.get("Temperature");
-//
-//            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
-//            System.out.println(currentHashmap.get("Temperature"));
-//            System.out.println(sensorData);
-//            sumOfTemperatures = sumOfTemperatures + sensorData.getTemp();
-//            System.out.println(sumOfTemperatures);
-//        }
-//        System.out.println(sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size());
-//
-//        return sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size();
-//
-//    }
 }

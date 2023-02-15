@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -9,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @RestController
 public class SensorDataController {
@@ -41,13 +39,6 @@ public class SensorDataController {
         return sensorData.getSensorReadingsById(id);
     }
 
-    //Average Temperature
-//    @GetMapping("/sensor/data/temperature/{id}")
-//    public int getAverageTempById(@PathVariable Integer id) throws Exception {
-//        SensorData sensorData = new SensorData();
-//        return sensorData.getAverageTempById(id);
-//    }
-
     //Get average metric for a sensor. Endpoint that takes in two request params. Id and Metric. The metric value can be Temperature, Humidity or WindSpeed.
     @GetMapping("/sensor/data/average")
     @ResponseBody
@@ -56,6 +47,7 @@ public class SensorDataController {
         return sensorData.getAverageMetricById(id, metric);
     }
 
+    //Get average metric for a sensor, by id, on a specified date
     @GetMapping("/sensor/data/average/date")
     @ResponseBody
     public int getAverageMetricByIdAndMetricAndDate(@RequestParam Integer id, @RequestParam String metric, @RequestParam String date) throws SQLException {
@@ -63,6 +55,7 @@ public class SensorDataController {
         return sensorData.getAverageMetricByIdAndDate(id, metric, date);
     }
 
+    //Get average metric for a sensor, by id, within a date range
     @GetMapping("/sensor/data/average/date-range")
     @ResponseBody
     public int getAverageMetricByIdAndMetricAndDateRange(@RequestParam Integer id, @RequestParam String metric, @RequestParam String firstDate, @RequestParam String lastDate) throws SQLException, ParseException {
@@ -70,6 +63,7 @@ public class SensorDataController {
         return sensorData.getAverageMetricByIdAndDateRange(id, metric, firstDate, lastDate);
     }
 
+    //create a new sensor reading in the database
     @PostMapping("/sensor/data/create")
     public String createSensorData(@RequestBody SensorData sensorData) throws SQLException {
         SensorData postSensorData = new SensorData();

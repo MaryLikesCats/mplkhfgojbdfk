@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -23,38 +22,26 @@ public class SensorController {
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
-
+    //gets all sensors from the database
     @GetMapping("/sensor")
     public ArrayList getAllSensor() throws SQLException {
         Sensor sensor = new Sensor();
         return sensor.getAllSensors();
 
     }
-
+    //returns a sensor by id
     @GetMapping("/sensor/{id}")
     public HashMap getSensorById(@PathVariable Integer id) throws Exception {
         Sensor sensor = new Sensor();
         return sensor.getSensorsById(id);
     }
 
-// To implement
-//    @GetMapping("/sensorByLocation")
-//    public Sensor getSensorByLocation(@RequestParam String country){
-//        Optional sensor = sensorService.getServiceByLocation(country);
-//        if(sensor.isPresent()){
-//            return (Sensor) sensor.get();
-//        }
-//        return null;
-//    }
-
-
+    //creates a new sensor in the database. You must include id, country and city in the request body.
     @PostMapping("/sensor/create")
     public void createSensor(@RequestBody Sensor sensor) throws SQLException {
         Sensor postSensor = new Sensor();
-        postSensor.postNewSensor(sensor);
+        postSensor.saveNewSensor(sensor);
     }
-
-
 }
 
 

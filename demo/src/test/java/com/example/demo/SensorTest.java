@@ -13,54 +13,20 @@ class SensorTest {
 
     private Sensor sensor;
     private Statement statement;
+    private String databaseName;
+    private Connection conn;
 
-    @BeforeEach
-    void setUp() throws SQLException {
-        sensor = new SensorController();
-        statement = mock(Statement.class);
-        sensor.conn = mock(Connection.class);
-        when(sensor.conn.createStatement()).thenReturn(statement);
+    SensorTest() throws SQLException {
+        this.databaseName = "weatherSensorDB.db";
+        this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
 
     @Test
-    void getAllSensors() {
-
-
+    void testSave() throws SQLException {
+        Sensor sensor = new Sensor(4, "Ireland", "Galway");
+        Boolean success = sensor.saveNewSensor(sensor);
+        assertEquals(true, success);
     }
 
-    @Test
-    void getSensorsById() throws Exception {
-        HashMap testSensor = new HashMap();
-        testSensor.put("uuid", 1);
-        testSensor.put("country", "Belgium");
-        testSensor.put("city", "Brussels");
-        insertSensorIntoDatabase(testSensor);
 
-        HashMap returnedSensor = new HashMap();
-        returnedSensor = getSensorsById(1);
-
-        assertEquals(testSensor, returnedSensor);
-
-    }
-
-    @Test
-    void postNewSensor() {
-    }
-
-    @Test
-    void saveSensor() {
-    }
-
-    public void insertSensorIntoDatabase(HashMap sensor) throws Exception {
-        String databaseName = "weatherSensorDB.db";
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
-        String query = "insert into Sensor (uuid, country, city) values (?, ?, ?)";
-
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, (int) sensor.get("uuid"));
-            stmt.setString(2, (String) sensor.get("country"));
-            stmt.setString(3, (String) sensor.get("city"));
-            stmt.executeUpdate();
-        }
-    }
 }
