@@ -177,10 +177,63 @@ public class SensorData {
     public void setDate(String date) {
         this.date = date;
     }
-    public void convertStringToSimpleDateFormat() throws ParseException {
-        String sDate1="31/12/1998";
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-        System.out.println(sDate1+"\t"+date1);
+    public Date convertStringToSimpleDateFormat(String dateString) throws ParseException {
+        Date dateFormatted=new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+        return dateFormatted;
     }
 
+    public int getAverageMetricByIdAndDate(Integer id, String metric, String date) throws SQLException {
+
+        int sumOfMetricValue = 0;
+        int counter = 0;
+        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
+
+        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
+            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
+            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
+
+            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
+            System.out.println(currentHashmap.get("Date").equals(date));
+            System.out.println(currentHashmap.get(("Date")));
+            System.out.println(date);
+            if(currentHashmap.get("Date").equals(date)) {
+                sumOfMetricValue = sumOfMetricValue + sensorData.getMetric(metric);
+                counter++;
+            }
+
+        }
+        return sumOfMetricValue/counter;
+
+    }
+
+    public int getAverageMetricByIdAndDateRange(Integer id, String metric, String firstDate, String lastDate) throws ParseException, SQLException {
+        //convert all dates from string to datetype
+
+        Date firstDateFormatted = convertStringToSimpleDateFormat(firstDate);
+        Date lastDateFormatted = convertStringToSimpleDateFormat(lastDate);
+
+        int sumOfMetricValue = 0;
+        int counter = 0;
+        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
+
+        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
+
+            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
+
+            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
+
+            if(isWithinRange(convertStringToSimpleDateFormat(currentHashmap.get(("Date"))), firstDateFormatted, lastDateFormatted)){
+                System.out.println("It worked");
+                sumOfMetricValue = sumOfMetricValue + sensorData.getMetric(metric);
+                counter++;
+            }
+
+        }
+        return sumOfMetricValue/counter;
+    }
+
+
+    boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
+        return !(testDate.before(startDate) || testDate.after(endDate));
+    }
 }
