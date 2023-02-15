@@ -8,6 +8,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String defaultInstructions() {
-        return "WEATHER SENSER REST API" + "\n" + "---------------- \n to query by id use this /sensor/id ";
+        return "WEATHER SENSER REST API";
     }
 }

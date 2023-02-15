@@ -45,7 +45,6 @@ import java.util.HashMap;
         }
         return ArrayListOfHashMaps;
 
-
     }
 
     public HashMap getSensorsById(int id) throws Exception {
