@@ -7,17 +7,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.IOException;
-import java.sql.*;
 
 @SpringBootApplication
-public class DemoApplication {
+public class Main {
 
 	public static void main(String[] args) throws SQLException, IOException {
 
-		int uuid = 100;
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:weatherSensorDB.db");
 //		dbSetup();
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(Main.class, args);
 	}
 
 	public static boolean dbSetup() throws SQLException {
