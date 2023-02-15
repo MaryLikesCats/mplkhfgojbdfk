@@ -70,30 +70,6 @@ public class SensorData {
 
     }
 
-
-    public int getAverageTempById(Integer id) throws SQLException {
-        int sumOfTemperatures = 0;
-        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
-        System.out.println(arrayListOfHashMapsOfSensorDataById);
-
-        //loop through and get all the temps and divide by number of entries in hashmap arraylist
-        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
-            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
-            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
-            currentHashmap.get("Temperature");
-
-            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
-            System.out.println(currentHashmap.get("Temperature"));
-            System.out.println(sensorData);
-            sumOfTemperatures = sumOfTemperatures + sensorData.getTemp();
-            System.out.println(sumOfTemperatures);
-        }
-        System.out.println(sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size());
-
-        return sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size();
-
-    }
-
     public int getAverageMetricById(Integer id, String metric) throws SQLException {
         int sumOfMetricValue = 0;
         ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
@@ -133,53 +109,10 @@ public class SensorData {
     }
 
     public void postNewSensorData(SensorData sensorData) throws SQLException {
+
         String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
         Statement statement = conn.createStatement();
         statement.executeUpdate(request);
-    }
-
-    public int getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(int uuid) {
-        this.uuid = uuid;
-    }
-
-    public int getTemp() {
-        return temp;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
-    }
-
-    public int getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(int humidity) {
-        this.humidity = humidity;
-    }
-
-    public int getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(int windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-    public Date convertStringToSimpleDateFormat(String dateString) throws ParseException {
-        Date dateFormatted=new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
-        return dateFormatted;
     }
 
     public int getAverageMetricByIdAndDate(Integer id, String metric, String date) throws SQLException {
@@ -236,4 +169,73 @@ public class SensorData {
     boolean isWithinRange(Date testDate, Date startDate, Date endDate) {
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
+
+    public Date convertStringToSimpleDateFormat(String dateString) throws ParseException {
+        Date dateFormatted=new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+        return dateFormatted;
+    }
+
+    public int getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(int uuid) {
+        this.uuid = uuid;
+    }
+
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public int getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(int windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+
+//    public int getAverageTempById(Integer id) throws SQLException {
+//        int sumOfTemperatures = 0;
+//        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
+//        System.out.println(arrayListOfHashMapsOfSensorDataById);
+//
+//        //loop through and get all the temps and divide by number of entries in hashmap arraylist
+//        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
+//            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
+//            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
+//            currentHashmap.get("Temperature");
+//
+//            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
+//            System.out.println(currentHashmap.get("Temperature"));
+//            System.out.println(sensorData);
+//            sumOfTemperatures = sumOfTemperatures + sensorData.getTemp();
+//            System.out.println(sumOfTemperatures);
+//        }
+//        System.out.println(sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size());
+//
+//        return sumOfTemperatures/arrayListOfHashMapsOfSensorDataById.size();
+//
+//    }
 }

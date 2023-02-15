@@ -25,11 +25,6 @@ public class SensorDataController {
         this.databaseName = "weatherSensorDB.db";
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
-    private SensorService sensorService;
-    @Autowired
-    public SensorDataController(SensorService sensorService){
-        this.sensorService = sensorService;
-    }
 
     //Get all sensor readings
     @GetMapping("/sensor/data")
@@ -46,11 +41,11 @@ public class SensorDataController {
     }
 
     //Average Temperature
-    @GetMapping("/sensor/data/temperature/{id}")
-    public int getAverageTempById(@PathVariable Integer id) throws Exception {
-        SensorData sensorData = new SensorData();
-        return sensorData.getAverageTempById(id);
-    }
+//    @GetMapping("/sensor/data/temperature/{id}")
+//    public int getAverageTempById(@PathVariable Integer id) throws Exception {
+//        SensorData sensorData = new SensorData();
+//        return sensorData.getAverageTempById(id);
+//    }
 
     //Get average metric for a sensor. Endpoint that takes in two request params. Id and Metric. The metric value can be Temperature, Humidity or WindSpeed.
     @GetMapping("/sensor/data/average")
@@ -73,13 +68,6 @@ public class SensorDataController {
         SensorData sensorData = new SensorData();
         return sensorData.getAverageMetricByIdAndDateRange(id, metric, firstDate, lastDate);
     }
-//
-//    @GetMapping("/sensor/data/{id}/{metric}")
-//    public int getAverageMetricById(@PathVariable Integer id, String metric) throws Exception {
-//        SensorData sensorData = new SensorData();
-//        System.out.println(metric);
-//        return sensorData.getAverageMetricById(id, metric);
-//    }
 
     @PostMapping("/sensor/data/create")
     public void createSensorData(@RequestBody SensorData sensorData) throws SQLException {

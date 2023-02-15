@@ -24,11 +24,6 @@ public class SensorController {
     }
 
 
-    private SensorService sensorService;
-    @Autowired
-    public SensorController(SensorService sensorService){
-        this.sensorService = sensorService;
-    }
     @GetMapping("/sensor")
     public ArrayList getAllSensor() throws SQLException {
         Sensor sensor = new Sensor();
