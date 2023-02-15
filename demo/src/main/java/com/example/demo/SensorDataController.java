@@ -48,10 +48,25 @@ public class SensorDataController {
         SensorData sensorData = new SensorData();
         return sensorData.getAverageTempById(id);
     }
+//
+//    @GetMapping("/sensor/data/{id}/{metric}")
+//    public int getAverageMetricById(@PathVariable Integer id, String metric) throws Exception {
+//        SensorData sensorData = new SensorData();
+//        System.out.println(metric);
+//        return sensorData.getAverageMetricById(id, metric);
+//    }
 
     @PostMapping("/sensor/data/create")
     public void createSensorData(@RequestBody SensorData sensorData) throws SQLException {
         SensorData postSensorData = new SensorData();
         postSensorData.postNewSensorData(sensorData);
+    }
+
+
+    @GetMapping("/sensor/data/average")
+    @ResponseBody
+    public int getAverageMetricByIdAndMetric(@RequestParam Integer id, @RequestParam String metric) throws SQLException {
+        SensorData sensorData = new SensorData();
+        return sensorData.getAverageMetricById(id, metric);
     }
 }

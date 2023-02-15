@@ -94,6 +94,44 @@ public class SensorData {
 
     }
 
+    public int getAverageMetricById(Integer id, String metric) throws SQLException {
+        int sumOfMetricValue = 0;
+        ArrayList<HashMap> arrayListOfHashMapsOfSensorDataById = getSensorReadingsById(id);
+
+        for (int i = 0; i < arrayListOfHashMapsOfSensorDataById.size(); i++) {
+            System.out.println(arrayListOfHashMapsOfSensorDataById.get(i));
+            HashMap<String, String> currentHashmap = arrayListOfHashMapsOfSensorDataById.get(i);
+
+            SensorData sensorData = new SensorData(parseInt(currentHashmap.get("Temperature")), parseInt(currentHashmap.get("Humidity")), parseInt(currentHashmap.get("WindSpeed")), parseInt(currentHashmap.get("uuid")), currentHashmap.get("Date"));
+
+            sumOfMetricValue = sumOfMetricValue + sensorData.getMetric(metric);
+        }
+        return sumOfMetricValue/arrayListOfHashMapsOfSensorDataById.size();
+
+    }
+
+    private int getMetric(String metric) {
+        int returnValue;
+        switch (metric) {
+
+            case "Temperature":
+                returnValue = temp;
+                break;
+
+            case "Humidity":
+                returnValue = humidity;
+                break;
+
+            case "WindSpeed":
+                returnValue = windSpeed;
+                break;
+
+            default:
+                returnValue = 10000;
+        }
+        return returnValue;
+    }
+
     public void postNewSensorData(SensorData sensorData) throws SQLException {
         String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
         Statement statement = conn.createStatement();
