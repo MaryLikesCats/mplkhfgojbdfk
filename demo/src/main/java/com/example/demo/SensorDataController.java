@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -70,9 +71,15 @@ public class SensorDataController {
     }
 
     @PostMapping("/sensor/data/create")
-    public void createSensorData(@RequestBody SensorData sensorData) throws SQLException {
+    public String createSensorData(@RequestBody SensorData sensorData) throws SQLException {
         SensorData postSensorData = new SensorData();
-        postSensorData.postNewSensorData(sensorData);
+        return postSensorData.postNewSensorData(sensorData);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleTypeMismatch(MethodArgumentTypeMismatchException e) {
+        String message = String.format("Error: Mismatched types. Ensure id is a integer.");
+        return message;
     }
 
 }

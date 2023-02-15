@@ -108,11 +108,33 @@ public class SensorData {
         return returnValue;
     }
 
-    public void postNewSensorData(SensorData sensorData) throws SQLException {
+    public String postNewSensorData(SensorData sensorData) throws SQLException {
 
-        String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(request);
+        Statement st = conn.createStatement();
+        ResultSet results = st.executeQuery("select * from SensorReading where uuid = " + sensorData.uuid);
+
+        ResultSetMetaData rsmd = results.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        ArrayList<HashMap> ArrayListOfHashMaps = new ArrayList<>();
+        while (results.next()) {
+            HashMap newHashmapForEachLoop = new HashMap();
+            for (int i = 1; i <= columnsNumber; i++) {
+                String columnValue = results.getString(i);
+                newHashmapForEachLoop.put(rsmd.getColumnName(i), columnValue);
+            }
+            ArrayListOfHashMaps.add(newHashmapForEachLoop);
+        }
+
+        if (ArrayListOfHashMaps.size() > 1) {
+            String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(request);
+            return "Success";
+        }
+        else {
+            return "Sensor does not exist. Ensure you have the correct sensor id";
+        }
+
     }
 
     public int getAverageMetricByIdAndDate(Integer id, String metric, String date) throws SQLException {
