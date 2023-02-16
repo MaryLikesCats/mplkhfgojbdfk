@@ -1,8 +1,9 @@
-Weather Senser API
+# Weather Senser API
 
+### Technologies used
 I created this using Java and Spring Web with an SQLite database. I used Postman to assist in sending Post requests, DB Browser for SQLite to easily view what was in my database, Maven to handle dependencies and IntelliJ as my IDE.
 
-The endpoints are as follows:
+### The endpoints are as follows:
 
 http://localhost:8080 This returns "WEATHER SENSOR REST API".
 
@@ -37,5 +38,8 @@ http://localhost:8080/sensor/data/create I used Postman to send my post requests
     "uuid": 313
 }
 
-If I had more time to work on this coding challenge I would have included more input validation, exception handling and far more unit tests. I did find this quite time consuming and unfortunately didn’t have the time to keep working on it before the deadline. 
+### Challenges and what I would do if I had more time
+If I had more time to work on this coding challenge I would have included some more input validation and exception handling. I would have also put more time into my tests. I was having trouble with the tests and I was receiving the same SQLite error on them. I could not work out this issue by myself within the time. I think my tests are along the right lines but I'm missing some understanding to get them to fully work. Hopefully you can see what I was trying to do with them. 
+
+### Note on database
 The database weatherSensorDB.db is saved here but the app also contains the functionality to create the Database, by uncommenting out line 17 of the main. Thanks for taking the time to look at my coding challenge!
