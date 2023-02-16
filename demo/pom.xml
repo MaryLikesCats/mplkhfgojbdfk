@@ -34,17 +34,6 @@
 			<version>3.40.1.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20220320</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq</artifactId>
-			<version>3.11.11</version>
-		</dependency>
 	</dependencies>
 
 	<build>
