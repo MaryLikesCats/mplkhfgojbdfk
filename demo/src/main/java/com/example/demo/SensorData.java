@@ -104,7 +104,7 @@ public class SensorData {
                 break;
 
             default:
-                returnValue = 10000;
+                returnValue = 0;
         }
         return returnValue;
     }
