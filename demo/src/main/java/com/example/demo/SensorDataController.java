@@ -13,6 +13,11 @@ import java.util.ArrayList;
 public class SensorDataController {
     private String databaseName;
     private Connection conn;
+    private SensorData sensorData;
+
+    public SensorDataController(SensorData sensorData){
+        this.sensorData = sensorData;
+    }
 
     public SensorDataController() throws SQLException {
         try {
@@ -24,6 +29,7 @@ public class SensorDataController {
         this.databaseName = "weatherSensorDB.db";
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
+
 
     //Get all sensor readings
     @GetMapping("/sensor/data")
@@ -67,7 +73,7 @@ public class SensorDataController {
     @PostMapping("/sensor/data/create")
     public String createSensorData(@RequestBody SensorData sensorData) throws SQLException {
         SensorData postSensorData = new SensorData();
-        return postSensorData.postNewSensorData(sensorData);
+        return (String) postSensorData.postNewSensorData(sensorData).keySet().toArray()[0];
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

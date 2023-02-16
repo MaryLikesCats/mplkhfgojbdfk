@@ -18,12 +18,14 @@ public class SensorData {
     private Connection conn;
     private String databaseName;
 
-    public SensorData(int temp, int humidity, int windSpeed, int uuid, String date){
+    public SensorData(int temp, int humidity, int windSpeed, int uuid, String date) throws SQLException {
         this.temp = temp;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.date = date;
         this.uuid = uuid;
+        this.databaseName = "weatherSensorDB.db";
+        this.conn = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
     }
     public SensorData() throws SQLException {
         this.databaseName = "weatherSensorDB.db";
@@ -107,8 +109,8 @@ public class SensorData {
         return returnValue;
     }
 
-    public String postNewSensorData(SensorData sensorData) throws SQLException {
-
+    public HashMap<String, Boolean> postNewSensorData(SensorData sensorData) throws SQLException {
+        HashMap<String, Boolean> ret = new HashMap();
         Statement st = conn.createStatement();
         ResultSet results = st.executeQuery("select * from SensorReading where uuid = " + sensorData.uuid);
 
@@ -128,12 +130,13 @@ public class SensorData {
             String request = "insert into SensorReading values ('" + sensorData.temp + "', '" + sensorData.humidity + "', '" + sensorData.windSpeed + "', '" + sensorData.date + "', '" + sensorData.uuid + " ')";
             Statement statement = conn.createStatement();
             statement.executeUpdate(request);
-            return "Success";
+            ret.put("Success", true);
+
         }
         else {
-            return "Sensor does not exist. Ensure you have the correct sensor id";
+            ret.put("Sensor does not exist. Ensure you have the correct sensor id", false);
         }
-
+        return ret;
     }
 
     public int getAverageMetricByIdAndDate(Integer id, String metric, String date) throws SQLException {
